@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'temperature.dart';
 import 'control.dart';
+import 'about.dart';
+import 'led_control.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -123,11 +125,29 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       _cardMenu(
                         icon: 'assets/images/fan-1.png',
-                        title: 'WATER',
+                        title: 'Lamp',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              // route ke page write_examples
+                              builder: (context) => const LedControlPage(),
+                            ),
+                          );
+                        },
                       ),
                       _cardMenu(
                         icon: 'assets/images/fan-1.png',
-                        title: 'WATER',
+                        title: 'About',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              // route ke page write_examples
+                              builder: (context) => const AboutPage(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   )

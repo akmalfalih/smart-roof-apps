@@ -4,17 +4,17 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 
-class ControlPage extends StatefulWidget {
-  const ControlPage({super.key});
+class LedControlPage extends StatefulWidget {
+  const LedControlPage({super.key});
 
   @override
-  State<ControlPage> createState() => _ControlPageState();
+  State<LedControlPage> createState() => _LedControlPageState();
 }
 
-class _ControlPageState extends State<ControlPage> {
-  dynamic _roofState;
+class _LedControlPageState extends State<LedControlPage> {
+  dynamic _ledState;
   String _buttonState = 'waiting';
-  String _roofDisplay = 'none';
+  String _ledDisplay = 'none';
   final _database = FirebaseDatabase.instance.ref(); // reference ke database
   late StreamSubscription _dailySpecialStream;
 
@@ -25,17 +25,16 @@ class _ControlPageState extends State<ControlPage> {
   }
 
   void _activateListener() {
-    _dailySpecialStream =
-        _database.child('live/posisi').onValue.listen((event) {
+    _dailySpecialStream = _database.child('live/led').onValue.listen((event) {
       // cek perubahan data
-      _roofState = event.snapshot.value;
-      final String roofString = _roofState;
+      _ledState = event.snapshot.value;
+      final String roofString = _ledState;
       setState(() {
-        _roofDisplay = roofString;
-        if (_roofDisplay == 'outside') {
-          _buttonState = 'IN';
-        } else if (_roofDisplay == 'inside') {
-          _buttonState = 'OUT';
+        _ledDisplay = roofString;
+        if (_ledDisplay == 'OFF') {
+          _buttonState = 'ON';
+        } else if (_ledDisplay == 'ON') {
+          _buttonState = 'OFF';
         } else {
           _buttonState = 'None';
         }
@@ -48,7 +47,7 @@ class _ControlPageState extends State<ControlPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Roof Control',
+          'Lamp Control',
           style: TextStyle(
             fontSize: 30,
           ),
@@ -71,7 +70,7 @@ class _ControlPageState extends State<ControlPage> {
                     padding: EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                        _roofDisplay,
+                        _ledDisplay,
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.white,
@@ -86,12 +85,12 @@ class _ControlPageState extends State<ControlPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final servoControl = <String, dynamic>{
-                    'servo': _buttonState,
+                  final ledControl = <String, dynamic>{
+                    'led': _buttonState,
                   };
                   await _database
                       .child('live')
-                      .update(servoControl)
+                      .update(ledControl)
                       .then((_) => print('Temperature has been written!'))
                       .catchError((e) => print('You got an error $e'));
                 },

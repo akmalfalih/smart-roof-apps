@@ -110,6 +110,14 @@ class _TempPageState extends State<TempPage> {
                   .onValue,
               builder: (context, snapshot) {
                 final tileList = <ListTile>[];
+                tileList.add(ListTile(
+                  leading: Text(
+                    'Time Stamp                             ',
+                  ),
+                  title: Text(
+                    'Suhu',
+                  ),
+                ));
                 if (snapshot.hasData &&
                     snapshot.data != null &&
                     (snapshot.data! as DatabaseEvent).snapshot.value != null) {
@@ -120,7 +128,7 @@ class _TempPageState extends State<TempPage> {
                     final tempHistory = Map<String, dynamic>.from(value);
                     final historyTile = ListTile(
                       leading: Text(tempHistory['waktu']),
-                      title: Text(tempHistory['suhu']),
+                      title: Text(tempHistory['suhu'].toString()),
                     );
                     tileList.add(historyTile);
                   });
