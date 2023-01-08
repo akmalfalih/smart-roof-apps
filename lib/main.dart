@@ -68,73 +68,72 @@ class _HomePageState extends State<HomePage> {
                 width: 350,
                 child: Padding(
                   padding: EdgeInsets.all(4.0),
-                  child: Center(
-                    child: Text(
-                      "Hello World",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                      ),
+                  child: Text(
+                    "Hi, Akmal!",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
             Expanded(
-                child: ListView(
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _cardMenu(
-                      icon: 'assets/images/fan-1.png',
-                      title: 'Temperature',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            // route ke page write_examples
-                            builder: (context) => const TempPage(),
-                          ),
-                        );
-                      },
-                    ),
-                    _cardMenu(
-                      icon: 'assets/images/fan-1.png',
-                      title: 'Control',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            // route ke page write_examples
-                            builder: (context) => const ControlPage(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _cardMenu(
-                      icon: 'assets/images/fan-1.png',
-                      title: 'WATER',
-                    ),
-                    _cardMenu(
-                      icon: 'assets/images/fan-1.png',
-                      title: 'WATER',
-                    ),
-                  ],
-                )
-              ],
-            ))
+              child: ListView(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _cardMenu(
+                        icon: 'assets/images/fan-1.png',
+                        title: 'Temperature',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              // route ke page write_examples
+                              builder: (context) => const TempPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      _cardMenu(
+                        icon: 'assets/images/fan-1.png',
+                        title: 'Control',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              // route ke page write_examples
+                              builder: (context) => const ControlPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _cardMenu(
+                        icon: 'assets/images/fan-1.png',
+                        title: 'WATER',
+                      ),
+                      _cardMenu(
+                        icon: 'assets/images/fan-1.png',
+                        title: 'WATER',
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

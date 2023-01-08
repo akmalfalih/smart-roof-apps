@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -99,7 +98,40 @@ class _TempPageState extends State<TempPage> {
             const Text(
               'History',
               style: TextStyle(fontSize: 25),
-            )
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            StreamBuilder(
+              stream: _database
+                  .child('tempHistory')
+                  .orderByKey()
+                  .limitToLast(10)
+                  .onValue,
+              builder: (context, snapshot) {
+                final tileList = <ListTile>[];
+                if (snapshot.hasData &&
+                    snapshot.data != null &&
+                    (snapshot.data! as DatabaseEvent).snapshot.value != null) {
+                  final history = Map<dynamic, dynamic>.from(
+                      (snapshot.data! as DatabaseEvent).snapshot.value
+                          as Map<dynamic, dynamic>);
+                  history.forEach((key, value) {
+                    final tempHistory = Map<String, dynamic>.from(value);
+                    final historyTile = ListTile(
+                      leading: Text(tempHistory['waktu']),
+                      title: Text(tempHistory['suhu']),
+                    );
+                    tileList.add(historyTile);
+                  });
+                }
+                return Expanded(
+                  child: ListView(
+                    children: tileList,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
