@@ -296,7 +296,12 @@ class _HomePageState extends State<HomePage> {
         color: Colors.grey[350],
       );
     } else {
-      return const Text('No Data');
+      return const Text(
+        'No Data',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      );
     }
   }
 }

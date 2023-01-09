@@ -12,7 +12,7 @@ class TempPage extends StatefulWidget {
 
 class _TempPageState extends State<TempPage> {
   dynamic temperature;
-  String tempDisp = '- C';
+  String tempDisp = '- \u00B0C';
   final _database = FirebaseDatabase.instance.ref(); // reference ke database
   late StreamSubscription _dailySpecialStream;
 
@@ -29,7 +29,7 @@ class _TempPageState extends State<TempPage> {
       temperature = event.snapshot.value;
       final String tempString = temperature.toString();
       setState(() {
-        tempDisp = '$tempString C';
+        tempDisp = '$tempString \u00B0C';
       });
     });
   }
@@ -115,7 +115,7 @@ class _TempPageState extends State<TempPage> {
                     'Time Stamp                             ',
                   ),
                   title: Text(
-                    'Suhu',
+                    'Temperature (\u00B0C)',
                   ),
                 ));
                 if (snapshot.hasData &&
