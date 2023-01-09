@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
 import 'package:intl/intl.dart';
 
 import 'temperature.dart';
@@ -42,12 +44,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  dynamic weather;
+  String weatherDisp = '';
+  final _database = FirebaseDatabase.instance.ref(); // reference ke database
+  late StreamSubscription _dailySpecialStream;
+
   List<IconData> listIcons = [
     Icons.lightbulb,
     Icons.roofing,
     Icons.thermostat,
     Icons.info_outline,
   ];
+
+  @override // aktifin listener (perubahan data)
+  void initState() {
+    super.initState();
+    _activateListener();
+  }
+
+  void _activateListener() {
+    _dailySpecialStream = _database.child('live/Cuaca').onValue.listen((event) {
+      // cek perubahan data
+      weather = event.snapshot.value;
+      setState(() {
+        weatherDisp = weather.toString();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +88,14 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const SizedBox(
-              height: 25,
+              height: 40,
             ),
             Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
               child: SizedBox(
-                height: 350,
+                height: 300,
                 width: 350,
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
@@ -96,10 +119,27 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       const Text(
-                        "Hi, Akmal!",
+                        "Hi, User!",
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: Column(
+                          children: [
+                            weatherIcon(cuaca: weatherDisp),
+                            Text(
+                              weatherDisp,
+                              style: const TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -221,5 +261,42 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void deactivate() {
+    _dailySpecialStream.cancel();
+    super.deactivate();
+  }
+
+  Widget weatherIcon({
+    required String cuaca,
+  }) {
+    List<IconData> iconList = [
+      Icons.cloud,
+      Icons.sunny,
+      Icons.water_drop_outlined
+    ];
+    if (cuaca == 'Hujan') {
+      return Icon(
+        iconList[2],
+        size: 100,
+        color: Colors.white,
+      );
+    } else if (cuaca == 'Cerah') {
+      return Icon(
+        iconList[1],
+        size: 100,
+        color: Colors.white,
+      );
+    } else if (cuaca == 'Mendung') {
+      return Icon(
+        iconList[0],
+        size: 100,
+        color: Colors.grey[350],
+      );
+    } else {
+      return const Text('No Data');
+    }
   }
 }
