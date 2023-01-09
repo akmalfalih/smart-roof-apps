@@ -14,7 +14,7 @@ class ControlPage extends StatefulWidget {
 class _ControlPageState extends State<ControlPage> {
   dynamic _roofState;
   String _buttonState = 'waiting';
-  String _roofDisplay = 'none';
+  String _roofDisplay = '';
   final _database = FirebaseDatabase.instance.ref(); // reference ke database
   late StreamSubscription _dailySpecialStream;
 
@@ -29,12 +29,12 @@ class _ControlPageState extends State<ControlPage> {
         _database.child('live/posisi').onValue.listen((event) {
       // cek perubahan data
       _roofState = event.snapshot.value;
-      final String roofString = _roofState;
+      final String roofString = _roofState.toString();
       setState(() {
-        _roofDisplay = roofString;
-        if (_roofDisplay == 'outside') {
+        _roofDisplay = "Your roof is $roofString";
+        if (_roofState == 'outside') {
           _buttonState = 'IN';
-        } else if (_roofDisplay == 'inside') {
+        } else if (_roofState == 'inside') {
           _buttonState = 'OUT';
         } else {
           _buttonState = 'None';
@@ -68,11 +68,11 @@ class _ControlPageState extends State<ControlPage> {
                   height: 250,
                   width: 350,
                   child: Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
                         _roofDisplay,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 30,
                           color: Colors.white,
                         ),
@@ -92,7 +92,7 @@ class _ControlPageState extends State<ControlPage> {
                   await _database
                       .child('live')
                       .update(servoControl)
-                      .then((_) => print('Temperature has been written!'))
+                      .then((_) => print('Roof position has been written!'))
                       .catchError((e) => print('You got an error $e'));
                 },
                 child: SizedBox(
@@ -101,7 +101,7 @@ class _ControlPageState extends State<ControlPage> {
                   child: Center(
                     child: Text(
                       _buttonState,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
                       ),

@@ -17,11 +17,11 @@ class AboutPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 25,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
@@ -40,10 +40,10 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 50,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
@@ -62,10 +62,10 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 50,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
@@ -84,10 +84,10 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 50,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
@@ -106,10 +106,10 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 50,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,

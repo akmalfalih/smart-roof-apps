@@ -67,11 +67,11 @@ class _LedControlPageState extends State<LedControlPage> {
                   height: 250,
                   width: 350,
                   child: Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                        _ledDisplay,
-                        style: TextStyle(
+                        'Your lamp is $_ledDisplay',
+                        style: const TextStyle(
                           fontSize: 30,
                           color: Colors.white,
                         ),
@@ -91,7 +91,7 @@ class _LedControlPageState extends State<LedControlPage> {
                   await _database
                       .child('live')
                       .update(ledControl)
-                      .then((_) => print('Temperature has been written!'))
+                      .then((_) => print('LED Status has been written!'))
                       .catchError((e) => print('You got an error $e'));
                 },
                 child: SizedBox(
@@ -100,7 +100,7 @@ class _LedControlPageState extends State<LedControlPage> {
                   child: Center(
                     child: Text(
                       _buttonState,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
                       ),

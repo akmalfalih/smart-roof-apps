@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'temperature.dart';
 import 'control.dart';
@@ -43,6 +42,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<IconData> listIcons = [
+    Icons.lightbulb,
+    Icons.roofing,
+    Icons.thermostat,
+    Icons.info_outline,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 25,
             ),
-            const Card(
+            Card(
               color: Colors.blue,
               elevation: 5,
               shadowColor: Colors.black,
@@ -69,13 +75,34 @@ class _HomePageState extends State<HomePage> {
                 height: 350,
                 width: 350,
                 child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    "Hi, Akmal!",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                    ),
+                  padding: const EdgeInsets.all(4.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      StreamBuilder(
+                        stream: Stream.periodic(const Duration(seconds: 1)),
+                        builder: (context, snapshot) {
+                          return Text(
+                            DateFormat('MM/dd/yyyy hh:mm:ss')
+                                .format(DateTime.now()),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Hi, Akmal!",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -90,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _cardMenu(
-                        icon: 'assets/images/fan-1.png',
+                        icon: listIcons[2],
                         title: 'Temperature',
                         onTap: () {
                           Navigator.push(
@@ -103,8 +130,8 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       _cardMenu(
-                        icon: 'assets/images/fan-1.png',
-                        title: 'Control',
+                        icon: listIcons[1],
+                        title: 'Roof Control',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -124,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _cardMenu(
-                        icon: 'assets/images/fan-1.png',
+                        icon: listIcons[0],
                         title: 'Lamp',
                         onTap: () {
                           Navigator.push(
@@ -137,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       _cardMenu(
-                        icon: 'assets/images/fan-1.png',
+                        icon: listIcons[3],
                         title: 'About',
                         onTap: () {
                           Navigator.push(
@@ -150,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -162,7 +189,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _cardMenu({
     required String title,
-    required String icon,
+    required IconData icon,
     VoidCallback? onTap,
     Color color = Colors.white,
     Color fontColor = Colors.grey,
@@ -180,7 +207,11 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Column(
           children: [
-            Image.asset(icon),
+            Icon(
+              icon,
+              color: Colors.blue,
+              size: 35,
+            ),
             const SizedBox(height: 10),
             Text(
               title,

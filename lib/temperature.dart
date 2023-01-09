@@ -40,7 +40,7 @@ class _TempPageState extends State<TempPage> {
       backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
         title: const Text(
-          'Suhu Realtime',
+          'Temperature',
           style: TextStyle(
             fontSize: 30,
           ),
@@ -110,7 +110,7 @@ class _TempPageState extends State<TempPage> {
                   .onValue,
               builder: (context, snapshot) {
                 final tileList = <ListTile>[];
-                tileList.add(ListTile(
+                tileList.add(const ListTile(
                   leading: Text(
                     'Time Stamp                             ',
                   ),
@@ -120,10 +120,9 @@ class _TempPageState extends State<TempPage> {
                 ));
                 if (snapshot.hasData &&
                     snapshot.data != null &&
-                    (snapshot.data! as DatabaseEvent).snapshot.value != null) {
+                    (snapshot.data!).snapshot.value != null) {
                   final history = Map<dynamic, dynamic>.from(
-                      (snapshot.data! as DatabaseEvent).snapshot.value
-                          as Map<dynamic, dynamic>);
+                      (snapshot.data!).snapshot.value as Map<dynamic, dynamic>);
                   history.forEach((key, value) {
                     final tempHistory = Map<String, dynamic>.from(value);
                     final historyTile = ListTile(
